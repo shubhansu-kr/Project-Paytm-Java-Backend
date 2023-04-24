@@ -79,8 +79,9 @@ class Transaction {
 
         ResultSet rs = stmt.executeQuery(q1);
         while (rs.next()) {
-            System.out.println(rs.getInt(1) + "\t" + rs.getInt(2) + "\t" + rs.getDouble(3) + "\t" + "\t" + "\t"
-                    + rs.getDouble(4) + "\t" + rs.getString(5) + "\t" + rs.getDouble(6));
+            String transactionEntry = rs.getInt(1) + "\t" + rs.getInt(2) + "\t" + rs.getDouble(3) + "\t" + "\t" + "\t"
+                    + rs.getDouble(4) + "\t" + rs.getString(5) + "\t" + rs.getDouble(6);
+            System.out.println(transactionEntry);
         }
         con.close();
     }
