@@ -1,10 +1,24 @@
 import java.io.*;
 import java.sql.*;
 
+class AuthenticationException extends Exception {
+    AuthenticationException() {
+    }
+
+    AuthenticationException(String s) {
+        super(s);
+    }
+
+    public String getMessage() {
+        System.out.println("AuthenticationException: File: Authentication.java Method: Authentication()");
+        return super.getMessage();
+    }
+}
+
 class Authentication {
     BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-    public int ValidateUser() {
+    public int ValidateUser() throws AuthenticationException{
         int t = 0;
         try {
 
@@ -21,8 +35,14 @@ class Authentication {
             if (rs.next())
                 t = 1;
             con.close();
-        } catch (Exception e) {
-            
+        } catch (SQLException e) {
+            System.out.println("UserId PassWord not Match");
+            System.out.println(e);
+            throw new AuthenticationException("Invalid Credentials");
+        }
+        catch (Exception e) {
+            System.out.println(e);
+            throw new AuthenticationException("Auth Error");
         }
         return t;
     }
