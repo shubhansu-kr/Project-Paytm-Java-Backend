@@ -5,9 +5,9 @@ class Service {
 
 		try {
 			while (true) {
-				
+
 				System.out.println();
-	
+
 				System.out.println("Enter 1 to Create New Account.");
 				System.out.println("Enter 2 for Deposit.");
 				System.out.println("Enter 3 for Withdrawl.");
@@ -16,17 +16,17 @@ class Service {
 				System.out.println("Enter 6 for Changing Password.");
 				System.out.println("Enter 7 for Account Details.");
 				System.out.println("Enter 8 to  Exit.");
-	
+
 				System.out.println();
-	
+
 				BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-	
+
 				System.out.println("Enter your Choice.");
 				int choice = Integer.parseInt(br.readLine());
-	
+
 				UserAccount userAcc = new UserAccount();
 				Transaction trans = new Transaction();
-	
+
 				switch (choice) {
 					case 1:
 						userAcc.createAccount();
@@ -58,13 +58,20 @@ class Service {
 			}
 		} catch (createAccountException e) {
 			System.out.println(e);
+			e.getMessage();
 			System.out.println("Service.java");
-		}
-		catch (Exception e) {
+		} catch (AccountDetailsException e) {
+			System.out.println(e);
+			e.getMessage();
+			System.out.println("Service.java");
+		} catch (AuthenticationException e) {
+			System.out.println(e);
+			e.getMessage();
+			System.out.println("Service.java");
+		} catch (Exception e) {
 			System.out.println("Service.java");
 			System.out.println(e);
 		}
-
 
 	}
 }
