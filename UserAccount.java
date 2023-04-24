@@ -64,7 +64,7 @@ class UserAccount {
 
             // Try executing the query1
             try {
-                String query1 = "select max(accountNumber) from bank_user";
+                String query1 = "select max(accno) from bank_user";
                 ResultSet Rset = StateMent.executeQuery(query1);
 
                 if (Rset.next()) {

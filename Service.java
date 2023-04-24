@@ -68,6 +68,13 @@ class Service {
 			System.out.println(e);
 			e.getMessage();
 			System.out.println("Service.java");
+		} catch (DepositException e) {
+			System.out.println(e);
+			e.getMessage();
+			System.out.println("Service.java");
+		} catch (WithdrawalException e) {
+			System.out.println(e);
+			e.getMessage();
 		} catch (Exception e) {
 			System.out.println("Service.java");
 			System.out.println(e);
