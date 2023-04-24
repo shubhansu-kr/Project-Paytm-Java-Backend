@@ -73,8 +73,8 @@ class Transaction {
             int tid = 0;
 
             try {
-                String q1 = "select tid,balance from bank_transaction where accountNumber='" + accountNumber
-                        + "' and tid=(select max(tid) from bank_transaction where accountNumber=" + accountNumber + ")";
+                String q1 = "select tid,balance from bank_transaction where accno='" + accountNumber
+                        + "' and tid=(select max(tid) from bank_transaction where accno=" + accountNumber + ")";
                 ResultSet rs = StateMent.executeQuery(q1);
                 tid = 0;
                 balance = 0;
@@ -124,8 +124,8 @@ class Transaction {
             Connect Cn = new Connect();
             Connection Con = Cn.fetchcon();
             Statement StateMent = Con.createStatement();
-            String q1 = "select tid,balance from bank_transaction where accountNumber='" + accountNumber
-                    + "' and tid=(select max(tid) from bank_transaction where accountNumber=" + accountNumber + ")";
+            String q1 = "select tid,balance from bank_transaction where accno='" + accountNumber
+                    + "' and tid=(select max(tid) from bank_transaction where accno=" + accountNumber + ")";
             ResultSet rs = StateMent.executeQuery(q1);
             int tid = 0;
             double balance = 0;
@@ -160,14 +160,47 @@ class Transaction {
         Connection Con = Cn.fetchcon();
         Statement StateMent = Con.createStatement();
         System.out.println("TID\tAccno\tCREDIT\t\tDEBIT\t\t\tDATE\t\t\t\t\tBALANCE");
-        String q1 = "select * from bank_transaction where accountNumber=" + accountNumber;
+        String q1 = "select * from bank_transaction where accno=" + accountNumber;
 
         ResultSet rs = StateMent.executeQuery(q1);
-        while (rs.next()) {
-            String transactionEntry = rs.getInt(1) + "\t" + rs.getInt(2) + "\t" + rs.getDouble(3) + "\t" + "\t" + "\t"
-                    + rs.getDouble(4) + "\t" + rs.getString(5) + "\t" + rs.getDouble(6);
-            System.out.println(transactionEntry);
+
+        File f = null;
+        FileOutputStream os = null;
+
+        try {
+
+            f = new File("MiniStatement.txt");
+
+            // Clear the file
+            os = new FileOutputStream(f);
+            os.write("".getBytes());
+            os.close();
+
+            os = new FileOutputStream(f, true);
+
+            while (rs.next()) {
+                String transactionEntry = rs.getInt(1) + "\t" + rs.getInt(2) + "\t" + rs.getDouble(3) + "\t" + "\t" + "\t" + rs.getDouble(4) + "\t" + rs.getString(5) + "\t" + rs.getDouble(6);
+                
+                os.write(transactionEntry.getBytes());
+
+                System.out.println(transactionEntry);
+            }
+
+            os.flush();
+        } catch (FileNotFoundException e) {
+            System.out.println(e);
+        } catch (IOException e) {
+            System.out.println(e);
+        } catch (Exception e) {
+            System.out.println(e);
+        } finally {
+            try {
+                os.close();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
         }
+
         Con.close();
     }
 
@@ -177,8 +210,8 @@ class Transaction {
         Connect Cn = new Connect();
         Connection Con = Cn.fetchcon();
         Statement StateMent = Con.createStatement();
-        String q1 = "select tid,balance from bank_transaction where accountNumber=" + accountNumber
-                + " and tid=(select max(tid) from bank_transaction where accountNumber=" + accountNumber + ")";
+        String q1 = "select tid,balance from bank_transaction where accno=" + accountNumber
+                + " and tid=(select max(tid) from bank_transaction where accno=" + accountNumber + ")";
         ResultSet rs = StateMent.executeQuery(q1);
         double balance = 0;
         if (rs.next())
