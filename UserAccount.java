@@ -143,6 +143,13 @@ class UserAccount {
             // Try executing query3
             int valid2 = 0;
             try {
+                String query1 = "select max(tid) from bank_transaction";
+                ResultSet Rset = StateMent.executeQuery(query1);
+
+                if (Rset.next()) {
+                    accountNumber = Rset.getInt(1)+1;
+                }
+
                 String q3 = "insert into bank_transaction values('" + transactionId + "','" + accountNumber + "','"
                         + depositAccount + "','" + withdrawlAccount
                         + "','"
@@ -214,7 +221,7 @@ class UserAccount {
 
             // Try executing Query1
             try {
-                String query1 = "select * from bank_user where accountNumber=" + accountNumber;
+                String query1 = "select * from bank_user where accno=" + accountNumber;
                 ResultSet Rset = StateMent.executeQuery(query1);
                 if (Rset.next()) {
                     System.out.println("Account Number: " + Rset.getInt(1));
