@@ -22,6 +22,7 @@ class Authentication {
                 t = 1;
             con.close();
         } catch (Exception e) {
+            
         }
         return t;
     }
